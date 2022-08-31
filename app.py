@@ -28,6 +28,7 @@ def submit():
         #     easypost.api_key = prod_key 
         # elif request.form['api_key_type'] == "Test":
         easypost.api_key = test_key
+        print(easypost.api_key)
 
         ship = {
             "to_address": {
@@ -65,6 +66,8 @@ def submit():
         
         if request.form['to_address_residential'] == "true":
             ship['to_address']['residential'] = True
+        else:
+            ship['to_address']['residential'] = False
 
         # print(request.form['parcel_predefined_package'])
         if request.form['parcel_predefined_package'] != '':
@@ -79,16 +82,29 @@ def submit():
             
 
         
+
+        # print(json.dumps(ship, indent=4)) 
+        
+        # shipment = easypost.Shipment.create(ship)
+        # print(shipment)
+
+        # return render_template('rates.html', rate_error_message=shipment.messages,rates=shipment.rates)  
+
         try: 
             print(json.dumps(ship, indent=4)) 
             
-            shipment = easypost.Shipment.create(ship)
+            shipment = easypost.Shipment.create(
+                to_address=ship['to_address'],
+                from_address=ship['from_address'],
+                parcel=ship['parcel']
+            )
             print(shipment)
 
             return render_template('rates.html', rate_error_message=shipment.messages,rates=shipment.rates)  
 
-        except:
-            return render_template('index.html', error="Oops! There was a problem.")
+        except easypost.error.Error as e:
+            print(e.http_body)
+            return render_template('index.html', error=f"Oops! There was a problem: {e.http_body}")
 
 
 
