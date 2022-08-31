@@ -12,12 +12,22 @@
     />
     <title>Rates</title>
   </head>
-<body>
+  <body>
+    {% if no_rates %}
+    <div class="alert alert-danger" role="alert">
+      {{ rate_error_message | safe }}
+    </div>
+    {% endif %} {% if rates %}
+    <div class="alert alert-success" role="alert">{{ rates | safe }}</div>
+    {% endif %}
 
-
-
-    
-  <script
+    <div class="card mb-3">
+      <h5 class="card-header">Rates</h5>
+      <div class="card-body row g-3">
+        <div class="col-md-6"></div>
+      </div>
+    </div>
+    <script
       src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.2.0/js/bootstrap.min.js"
       integrity="sha512-8Y8eGK92dzouwpROIppwr+0kPauu0qqtnzZZNEF8Pat5tuRNJxJXCkbQfJ0HlUG3y1HB3z18CSKmUo7i2zcPpg=="
       crossorigin="anonymous"

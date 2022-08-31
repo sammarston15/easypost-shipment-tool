@@ -85,7 +85,7 @@ def submit():
             shipment = easypost.Shipment.create(ship)
             print(shipment)
 
-            return render_template('index.html', success=f"{json.dumps(ship, indent=4)}")  
+            return render_template('rates.html', rate_error_message=shipment.messages,rates=shipment.rates)  
 
         except:
             return render_template('index.html', error="Oops! There was a problem.")
