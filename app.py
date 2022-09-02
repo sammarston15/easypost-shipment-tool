@@ -89,7 +89,7 @@ def submit():
         # print(shipment)
 
         # return render_template('rates.html', rate_error_message=shipment.messages,rates=shipment.rates)  
-
+        
         try: 
             print(json.dumps(ship, indent=4)) 
             

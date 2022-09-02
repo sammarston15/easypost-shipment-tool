@@ -13,21 +13,37 @@
     <title>Rates</title>
   </head>
   <body>
-    {% if rate_error_message %}
-    <div class="alert alert-danger" role="alert">
 
-      {{ rate_error_message | safe }}
+    <div class="container-xl">
+        
+    
+        {% if rate_error_message %}
+        <div class="alert alert-danger" role="alert">
+    
+          {{ rate_error_message | safe }}
+        </div>
+        {% endif %} {% if rates %}
+        <table class="table table-striped-columns">
+            <thead>
+              <tr>
+                <th scope="col">Carrier</th>
+                <th scope="col">Service</th>
+                <th scope="col">Rate</th>
+              </tr>
+            </thead>
+            <tbody>
+                {% for rate in rates %}
+                <tr>
+                    <td>{{rate.carrier}}</td>
+                    <td>{{rate.service}}</td>
+                    <td>{{rate.rate}}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+          </table>
+        {% endif %}
+
     </div>
-    {% endif %} {% if rates %}
-        {% for rate in rates %}
-            <div class="card mb-3">
-              <h5 class="card-header">Rates</h5>
-              <div class="card-body row g-3">
-                <div class="col-md-6">{{rate | safe}}</div>
-              </div>
-            </div>
-        {% endfor %}
-    {% endif %}
 
     <script
       src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.2.0/js/bootstrap.min.js"
