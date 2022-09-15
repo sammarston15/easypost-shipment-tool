@@ -33,7 +33,7 @@
         </div>
       </nav>
 
-      <form action="/submit" method="POST" onsubmit="spinnerFunction()">
+      <form action="/submit" method="POST">
         <div class="card mb-3">
           <h5 class="card-header">To Address</h5>
           <div class="card-body row g-3">
@@ -350,17 +350,32 @@
         </div>
 
         <button
-            type="submit"
-            class="btn btn-primary"
-            onclick="alert('hello')"
+          type="submit"
+          class="btn btn-primary mb-3"
+          data-bs-toggle="modal"
+          data-bs-target="#spinnerModal"
         >
           Submit
         </button>
       </form>
-      <div class="modal invisible" id="spinnerModal" tabindex="-1">
-        <div class="modal-body">
-          <div class="spinner-border text-primary" role="status">
-            <span class="visually-hidden">Loading...</span>
+      <div
+        class="modal fade"
+        id="spinnerModal"
+        tabindex="-1"
+        aria-labelledby="exampleModalLabel"
+        aria-hidden="true"
+        data-bs-backdrop="static"
+      >
+        <div class="modal-dialog modal-dialog-centered">
+          <div
+            class="modal-content"
+            style="background: transparent; border: none"
+          >
+            <div class="d-flex justify-content-center align-items-center">
+              <div class="spinner-border" role="status">
+                <span class="visually-hidden">Loading...</span>
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -372,11 +387,5 @@
       crossorigin="anonymous"
       referrerpolicy="no-referrer"
     ></script>
-    <script>
-      function spinnerFunction() {
-        console.log('hit function')
-        document.getElementById('spinnerModal').classList.remove('invisible')
-      };
-    </script>
   </body>
 </html>
