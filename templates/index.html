@@ -103,14 +103,14 @@
               />
             </div>
             <div class="col-md-2">
-                <label for="to_address_zip" class="form-label">Zip</label>
-                <input
+              <label for="to_address_zip" class="form-label">Zip</label>
+              <input
                 type="text"
                 class="form-control"
                 id="to_address_zip"
                 name="to_address_zip"
                 required
-                />
+              />
             </div>
             <div class="col-md-4">
               <label for="to_address_country" class="form-label">Country</label>
@@ -240,16 +240,18 @@
               />
             </div>
             <div class="col-md-4">
-                <label for="from_address_country" class="form-label">Country</label>
-                <input
-                  type="text"
-                  class="form-control"
-                  id="from_address_country"
-                  placeholder="2 letter code (EX. US)"
-                  name="from_address_country"
-                  required
-                />
-              </div>
+              <label for="from_address_country" class="form-label"
+                >Country</label
+              >
+              <input
+                type="text"
+                class="form-control"
+                id="from_address_country"
+                placeholder="2 letter code (EX. US)"
+                name="from_address_country"
+                required
+              />
+            </div>
             <div class="col-md-4">
               <label for="from_address_phone" class="form-label">Phone</label>
               <input
@@ -347,8 +349,36 @@
           </div>
         </div>
 
-        <button type="submit" class="btn btn-primary">Submit</button>
+        <button
+          type="submit"
+          class="btn btn-primary mb-3"
+          data-bs-toggle="modal"
+          data-bs-target="#spinnerModal"
+        >
+          Submit
+        </button>
       </form>
+      <div
+        class="modal fade"
+        id="spinnerModal"
+        tabindex="-1"
+        aria-labelledby="exampleModalLabel"
+        aria-hidden="true"
+        data-bs-backdrop="static"
+      >
+        <div class="modal-dialog modal-dialog-centered">
+          <div
+            class="modal-content"
+            style="background: transparent; border: none"
+          >
+            <div class="d-flex justify-content-center align-items-center">
+              <div class="spinner-border" role="status">
+                <span class="visually-hidden">Loading...</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
 
     <script

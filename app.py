@@ -19,16 +19,16 @@ app = Flask(__name__)
 def index():
     return render_template('index.html')
 
+
 # handle form data
 @app.route('/submit', methods=['POST'])
 def submit():
     if request.method == 'POST':
-        # """ SET TEST OR PROD API KEY """
-        # if request.form['api_key_type'] == "Production":
-        #     easypost.api_key = prod_key 
-        # elif request.form['api_key_type'] == "Test":
+
+        # set the API key in the client library
         easypost.api_key = test_key
 
+        # create shipment dictionary using info sent from the client
         ship = {
             "to_address": {
                 "name": request.form['to_address_name'],
@@ -58,15 +58,19 @@ def submit():
             },
         }
 
+        # check to see if street2 was provided
         if request.form['to_address_street2'] != '':
             ship['to_address']['street2'] = request.form['to_address_street2']
         else:
             ship['to_address']['street2'] = None
         
+        # check if to_address.residential is true
         if request.form['to_address_residential'] == "true":
             ship['to_address']['residential'] = True
+        else:
+            ship['to_address']['residential'] = False
 
-        # print(request.form['parcel_predefined_package'])
+        # remove provided dims if a predefined_package was included
         if request.form['parcel_predefined_package'] != '':
             ship['parcel']['length'] = None
             ship['parcel']['height'] = None
@@ -75,20 +79,31 @@ def submit():
         else:
             ship['parcel']['predefined_package'] = None
 
-
-            
-
-        
+        # create the shipment and fetch rates from EasyPost
         try: 
+            print('hit try block')
             print(json.dumps(ship, indent=4)) 
             
-            shipment = easypost.Shipment.create(ship)
+            shipment = easypost.Shipment.create(
+                to_address=ship['to_address'],
+                from_address=ship['from_address'],
+                parcel=ship['parcel']
+            )
             print(shipment)
 
+            # sort rates by `carrier` before sending them to the client
+            def sorted_rates(e):
+                return e['carrier']
+
+            shipment.rates.sort(key=sorted_rates)
+
+            # if the above is successful, render the rates.html template
             return render_template('rates.html', rate_error_message=shipment.messages,rates=shipment.rates)  
 
-        except:
-            return render_template('index.html', error="Oops! There was a problem.")
+        except Exception as e:
+            print(e)
+            # render the index.html template but with an alert at the top with the Exception
+            return render_template('index.html', error=f"Oops! There was a problem: {e}")
 
 
 

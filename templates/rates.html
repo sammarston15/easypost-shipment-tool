@@ -13,20 +13,68 @@
     <title>Rates</title>
   </head>
   <body>
-    {% if no_rates %}
-    <div class="alert alert-danger" role="alert">
-      {{ rate_error_message | safe }}
-    </div>
-    {% endif %} {% if rates %}
-    <div class="alert alert-success" role="alert">{{ rates | safe }}</div>
-    {% endif %}
 
-    <div class="card mb-3">
-      <h5 class="card-header">Rates</h5>
-      <div class="card-body row g-3">
-        <div class="col-md-6"></div>
-      </div>
+    <div class="container-xl">
+        
+    
+        {% if rate_error_message %}
+        <div class="alert alert-danger" role="alert">
+          <div class="accordion alert-danger" id="accordionExample">
+            <div class="accordion-item">
+              <h2 class="accordion-header" id="headingOne">
+                <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                  Rating Errors Have Occurred For Some Of Your Carriers...
+                </button>
+              </h2>
+              <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
+                <div class="accordion-body">
+                  <table class="table table-striped table-hover table-bordered">
+                    <thead>
+                      <tr>
+                        <th scope="col">Carrier</th>
+                        <th scope="col">Carrier Account ID</th>
+                        <th scope="col">Message</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                        {% for error in rate_error_message %}
+                        <tr>
+                            <td>{{error.carrier}}</td>
+                            <td>{{error.carrier_account_id}}</td>
+                            <td>{{error.message}}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
+    
+        </div>
+        {% endif %} {% if rates %}
+        <table class="table table-striped table-hover table-bordered">
+            <thead>
+              <tr>
+                <th scope="col">Carrier</th>
+                <th scope="col">Service</th>
+                <th scope="col">Rate</th>
+              </tr>
+            </thead>
+            <tbody>
+                {% for rate in rates %}
+                <tr>
+                    <td>{{rate.carrier}}</td>
+                    <td>{{rate.service}}</td>
+                    <td>{{rate.rate}}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+          </table>
+        {% endif %}
+
     </div>
+
     <script
       src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.2.0/js/bootstrap.min.js"
       integrity="sha512-8Y8eGK92dzouwpROIppwr+0kPauu0qqtnzZZNEF8Pat5tuRNJxJXCkbQfJ0HlUG3y1HB3z18CSKmUo7i2zcPpg=="
