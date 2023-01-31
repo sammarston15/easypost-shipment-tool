@@ -1,391 +1,617 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link
-      href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/css/bootstrap.min.css"
-      rel="stylesheet"
-      integrity="sha384-gH2yIJqKdNHPEq0n4Mqa/HGKIhSkIHeL5AyhkYV8i59U5AR6csBvApHHNl/vI1Bx"
-      crossorigin="anonymous"
-    />
-    <title>EasyPost Shipment Tool</title>
-  </head>
-  <body>
-    {% if error %}
-    <div class="alert alert-danger" role="alert">{{ error | safe }}</div>
-    {% endif %} {% if success %}
-    <div class="alert alert-success" role="alert">{{ success | safe }}</div>
-    {% endif %}
+    <head>
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <link
+            href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/css/bootstrap.min.css"
+            rel="stylesheet"
+            integrity="sha384-gH2yIJqKdNHPEq0n4Mqa/HGKIhSkIHeL5AyhkYV8i59U5AR6csBvApHHNl/vI1Bx"
+            crossorigin="anonymous"
+        />
+        <title>EasyPost Shipment Tool</title>
+    </head>
+    <body class="bg-dark">
+        {% if error %}
+        <div class="alert alert-danger" role="alert">{{ error | safe }}</div>
+        {% endif %} {% if success %}
+        <div class="alert alert-success" role="alert">{{ success | safe }}</div>
+        {% endif %}
 
-    <div class="container-xxl">
-      <nav class="navbar bg-light mb-3">
-        <div class="container-fluid">
-          <a class="navbar-brand" href="/">
-            <img
-              src="/static/easypost/Logo/Dark/easypost logo dark.svg"
-              alt="easypost_logo"
-              height="35"
-              class="d-inline-block align-text-top"
-            />
-          </a>
-        </div>
-      </nav>
+        <div class="container-xxl">
+            <nav class="navbar bg-light mb-3">
+                <div class="container-fluid">
+                    <a class="navbar-brand" href="/">
+                        <img
+                            src="/static/easypost/Logo/Dark/easypost logo dark.svg"
+                            alt="easypost_logo"
+                            height="35"
+                            class="d-inline-block align-text-top"
+                        />
+                    </a>
+                </div>
+            </nav>
 
-      <form action="/submit" method="POST">
-        <div class="card mb-3">
-          <h5 class="card-header">To Address</h5>
-          <div class="card-body row g-3">
-            <div class="col-md-6">
-              <label for="to_address_name" class="form-label">Name</label>
-              <input
-                type="text"
-                class="form-control"
-                id="to_address_name"
-                name="to_address_name"
-                required
-              />
-            </div>
-            <div class="col-md-6">
-              <label for="to_address_company" class="form-label">Company</label>
-              <input
-                type="text"
-                class="form-control"
-                id="to_address_company"
-                name="to_address_company"
-              />
-            </div>
-            <div class="col-12">
-              <label for="to_address_street1" class="form-label"
-                >Street 1</label
-              >
-              <input
-                type="text"
-                class="form-control"
-                id="to_address_street1"
-                placeholder="1234 Main St"
-                name="to_address_street1"
-                required
-              />
-            </div>
-            <div class="col-12">
-              <label for="to_address_street2" class="form-label"
-                >Street 2</label
-              >
-              <input
-                type="text"
-                class="form-control"
-                id="to_address_street2"
-                placeholder="Apartment, studio, or floor"
-                name="to_address_street2"
-              />
-            </div>
-            <div class="col-md-6">
-              <label for="to_address_city" class="form-label">City</label>
-              <input
-                type="text"
-                class="form-control"
-                id="to_address_city"
-                name="to_address_city"
-                required
-              />
-            </div>
-            <div class="col-md-4">
-              <label for="to_address_state" class="form-label">State</label>
-              <input
-                type="text"
-                class="form-control"
-                id="to_address_state"
-                placeholder="2 letter code (EX. AZ, UT, CA, etc.)"
-                name="to_address_state"
-                required
-              />
-            </div>
-            <div class="col-md-2">
-              <label for="to_address_zip" class="form-label">Zip</label>
-              <input
-                type="text"
-                class="form-control"
-                id="to_address_zip"
-                name="to_address_zip"
-                required
-              />
-            </div>
-            <div class="col-md-4">
-              <label for="to_address_country" class="form-label">Country</label>
-              <input
-                type="text"
-                class="form-control"
-                id="to_address_country"
-                placeholder="2 letter code (EX. US)"
-                name="to_address_country"
-                required
-              />
-            </div>
-            <div class="col-md-4">
-              <label for="to_address_phone" class="form-label">Phone</label>
-              <input
-                type="text"
-                class="form-control"
-                id="to_address_phone"
-                name="to_address_phone"
-                required
-              />
-            </div>
-            <div class="col-md-4">
-              <label for="to_address_email" class="form-label">Email</label>
-              <input
-                type="email"
-                class="form-control"
-                id="to_address_email"
-                name="to_address_email"
-                required
-              />
-            </div>
-            <div class="col-12">
-              <div class="form-check">
-                <input
-                  class="form-check-input"
-                  type="checkbox"
-                  id="to_address_residential"
-                  name="to_address_residential"
-                  value="true"
-                />
-                <label class="form-check-label" for="gridCheck"
-                  >Residential</label
+            <form action="/submit" method="POST">
+                <div class="accordion" id="accordionExample">
+                    <div class="accordion-item mb-3 rounded">
+                        <h2 class="accordion-header" id="headingOne">
+                            <button
+                                class="accordion-button collapsed rounded"
+                                type="button"
+                                data-bs-toggle="collapse"
+                                data-bs-target="#collapseOne"
+                                aria-expanded="true"
+                                aria-controls="collapseOne"
+                            >
+                                <h5 class="card-header">
+                                    Step 1 - Destination Address
+                                </h5>
+                            </button>
+                        </h2>
+                        <div
+                            id="collapseOne"
+                            class="accordion-collapse collapse"
+                            aria-labelledby="headingOne"
+                            data-bs-parent="#accordionExample"
+                        >
+                            <div class="accordion-body">
+                                <div class="card-body row g-3">
+                                    <div class="col-md-6">
+                                        <label
+                                            for="to_address_name"
+                                            class="form-label"
+                                            >Name</label
+                                        >
+                                        <input
+                                            type="text"
+                                            class="form-control"
+                                            id="to_address_name"
+                                            name="to_address_name"
+                                            required
+                                        />
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label
+                                            for="to_address_company"
+                                            class="form-label"
+                                            >Company</label
+                                        >
+                                        <input
+                                            type="text"
+                                            class="form-control"
+                                            id="to_address_company"
+                                            name="to_address_company"
+                                        />
+                                    </div>
+                                    <div class="col-12">
+                                        <label
+                                            for="to_address_street1"
+                                            class="form-label"
+                                            >Street 1</label
+                                        >
+                                        <input
+                                            type="text"
+                                            class="form-control"
+                                            id="to_address_street1"
+                                            placeholder="1234 Main St"
+                                            name="to_address_street1"
+                                            required
+                                        />
+                                    </div>
+                                    <div class="col-12">
+                                        <label
+                                            for="to_address_street2"
+                                            class="form-label"
+                                            >Street 2</label
+                                        >
+                                        <input
+                                            type="text"
+                                            class="form-control"
+                                            id="to_address_street2"
+                                            placeholder="Apartment, studio, or floor"
+                                            name="to_address_street2"
+                                        />
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label
+                                            for="to_address_city"
+                                            class="form-label"
+                                            >City</label
+                                        >
+                                        <input
+                                            type="text"
+                                            class="form-control"
+                                            id="to_address_city"
+                                            name="to_address_city"
+                                            required
+                                        />
+                                    </div>
+                                    <div class="col-md-4">
+                                        <label
+                                            for="to_address_state"
+                                            class="form-label"
+                                            >State</label
+                                        >
+                                        <input
+                                            type="text"
+                                            class="form-control"
+                                            id="to_address_state"
+                                            placeholder="2 letter code (EX. AZ, UT, CA, etc.)"
+                                            name="to_address_state"
+                                            required
+                                        />
+                                    </div>
+                                    <div class="col-md-2">
+                                        <label
+                                            for="to_address_zip"
+                                            class="form-label"
+                                            >Zip</label
+                                        >
+                                        <input
+                                            type="text"
+                                            class="form-control"
+                                            id="to_address_zip"
+                                            name="to_address_zip"
+                                            required
+                                        />
+                                    </div>
+                                    <div class="col-md-4">
+                                        <label
+                                            for="to_address_country"
+                                            class="form-label"
+                                            >Country</label
+                                        >
+                                        <input
+                                            type="text"
+                                            class="form-control"
+                                            id="to_address_country"
+                                            placeholder="2 letter code (EX. US)"
+                                            name="to_address_country"
+                                            required
+                                        />
+                                    </div>
+                                    <div class="col-md-4">
+                                        <label
+                                            for="to_address_phone"
+                                            class="form-label"
+                                            >Phone</label
+                                        >
+                                        <input
+                                            type="text"
+                                            class="form-control"
+                                            id="to_address_phone"
+                                            name="to_address_phone"
+                                            required
+                                        />
+                                    </div>
+                                    <div class="col-md-4">
+                                        <label
+                                            for="to_address_email"
+                                            class="form-label"
+                                            >Email</label
+                                        >
+                                        <input
+                                            type="email"
+                                            class="form-control"
+                                            id="to_address_email"
+                                            name="to_address_email"
+                                            required
+                                        />
+                                    </div>
+                                    <div class="col-12">
+                                        <div class="form-check">
+                                            <input
+                                                class="form-check-input"
+                                                type="checkbox"
+                                                id="to_address_residential"
+                                                name="to_address_residential"
+                                                value="true"
+                                            />
+                                            <label
+                                                class="form-check-label"
+                                                for="gridCheck"
+                                                >Residential</label
+                                            >
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="accordion-item mb-3 rounded">
+                        <h2 class="accordion-header" id="headingTwo">
+                            <button
+                                class="accordion-button collapsed rounded"
+                                type="button"
+                                data-bs-toggle="collapse"
+                                data-bs-target="#collapseTwo"
+                                aria-expanded="false"
+                                aria-controls="collapseTwo"
+                            >
+                                <h5 class="card-header">
+                                    Step 2 - Origin Address
+                                </h5>
+                            </button>
+                        </h2>
+                        <div
+                            id="collapseTwo"
+                            class="accordion-collapse collapse"
+                            aria-labelledby="headingTwo"
+                            data-bs-parent="#accordionExample"
+                        >
+                            <div class="accordion-body">
+                                <div class="card-body row g-3">
+                                    <div class="col-md-6">
+                                        <label
+                                            for="from_address_name"
+                                            class="form-label"
+                                            >Name</label
+                                        >
+                                        <input
+                                            type="text"
+                                            class="form-control"
+                                            id="from_address_name"
+                                            name="from_address_name"
+                                            required
+                                        />
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label
+                                            for="from_address_company"
+                                            class="form-label"
+                                            >Company</label
+                                        >
+                                        <input
+                                            type="text"
+                                            class="form-control"
+                                            id="from_address_company"
+                                            name="from_address_company"
+                                        />
+                                    </div>
+                                    <div class="col-12">
+                                        <label
+                                            for="from_address_street1"
+                                            class="form-label"
+                                            >Street 1</label
+                                        >
+                                        <input
+                                            type="text"
+                                            class="form-control"
+                                            id="from_address_street1"
+                                            placeholder="1234 Main St"
+                                            name="from_address_street1"
+                                            required
+                                        />
+                                    </div>
+                                    <div class="col-12">
+                                        <label
+                                            for="from_address_street2"
+                                            class="form-label"
+                                            >Street 2</label
+                                        >
+                                        <input
+                                            type="text"
+                                            class="form-control"
+                                            id="from_address_street2"
+                                            placeholder="Apartment, studio, or floor"
+                                            name="from_address_street2"
+                                        />
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label
+                                            for="from_address_city"
+                                            class="form-label"
+                                            >City</label
+                                        >
+                                        <input
+                                            type="text"
+                                            class="form-control"
+                                            id="from_address_city"
+                                            name="from_address_city"
+                                            required
+                                        />
+                                    </div>
+                                    <div class="col-md-4">
+                                        <label
+                                            for="from_address_state"
+                                            class="form-label"
+                                            >State</label
+                                        >
+                                        <input
+                                            type="text"
+                                            class="form-control"
+                                            id="from_address_state"
+                                            placeholder="2 letter code (EX. AZ, UT, CA, etc.)"
+                                            name="from_address_state"
+                                            required
+                                        />
+                                    </div>
+                                    <div class="col-md-2">
+                                        <label
+                                            for="from_address_zip"
+                                            class="form-label"
+                                            >Zip</label
+                                        >
+                                        <input
+                                            type="text"
+                                            class="form-control"
+                                            id="from_address_zip"
+                                            name="from_address_zip"
+                                            required
+                                        />
+                                    </div>
+                                    <div class="col-md-4">
+                                        <label
+                                            for="from_address_country"
+                                            class="form-label"
+                                            >Country</label
+                                        >
+                                        <input
+                                            type="text"
+                                            class="form-control"
+                                            id="from_address_country"
+                                            placeholder="2 letter code (EX. US)"
+                                            name="from_address_country"
+                                            required
+                                        />
+                                    </div>
+                                    <div class="col-md-4">
+                                        <label
+                                            for="from_address_phone"
+                                            class="form-label"
+                                            >Phone</label
+                                        >
+                                        <input
+                                            type="text"
+                                            class="form-control"
+                                            id="from_address_phone"
+                                            name="from_address_phone"
+                                            required
+                                        />
+                                    </div>
+                                    <div class="col-md-4">
+                                        <label
+                                            for="from_address_email"
+                                            class="form-label"
+                                            >Email</label
+                                        >
+                                        <input
+                                            type="email"
+                                            class="form-control"
+                                            id="from_address_email"
+                                            name="from_address_email"
+                                            required
+                                        />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="accordion-item mb-3 rounded">
+                        <h2 class="accordion-header" id="headingThree">
+                            <button
+                                class="accordion-button collapsed rounded"
+                                type="button"
+                                data-bs-toggle="collapse"
+                                data-bs-target="#collapseThree"
+                                aria-expanded="false"
+                                aria-controls="collapseThree"
+                            >
+                                <h5 class="card-header">
+                                    Step 3 - Package Information
+                                </h5>
+                            </button>
+                        </h2>
+                        <div
+                            id="collapseThree"
+                            class="accordion-collapse collapse"
+                            aria-labelledby="headingThree"
+                            data-bs-parent="#accordionExample"
+                        >
+                            <div class="accordion-body">
+                                <div class="card-body row g-3">
+                                    <div class="col-md-3">
+                                        <label
+                                            for="parcel_length"
+                                            class="form-label"
+                                            >Length</label
+                                        >
+                                        <input
+                                            type="number"
+                                            class="form-control"
+                                            id="parcel_length"
+                                            name="parcel_length"
+                                            required
+                                            aria-describedby="lengthHelp"
+                                        />
+                                        <div id="lengthHelp" class="form-text">
+                                            inches
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <label
+                                            for="parcel_width"
+                                            class="form-label"
+                                            >Width</label
+                                        >
+                                        <input
+                                            type="number"
+                                            class="form-control"
+                                            id="parcel_width"
+                                            name="parcel_width"
+                                            required
+                                            aria-describedby="widthHelp"
+                                        />
+                                        <div id="widthHelp" class="form-text">
+                                            inches
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <label
+                                            for="parcel_height"
+                                            class="form-label"
+                                            >Height</label
+                                        >
+                                        <input
+                                            type="number"
+                                            class="form-control"
+                                            id="parcel_height"
+                                            name="parcel_height"
+                                            required
+                                            aria-describedby="heightHelp"
+                                        />
+                                        <div id="heightHelp" class="form-text">
+                                            inches
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <label
+                                            for="parcel_weight"
+                                            class="form-label"
+                                            >Weight</label
+                                        >
+                                        <input
+                                            type="number"
+                                            class="form-control"
+                                            id="parcel_weight"
+                                            name="parcel_weight"
+                                            required
+                                            aria-describedby="weightHelp"
+                                        />
+                                        <div id="weightHelp" class="form-text">
+                                            ounces
+                                        </div>
+                                    </div>
+                                    <div class="col-12">
+                                        <label
+                                            for="parcel_predefined_package"
+                                            class="form-label"
+                                            >Predefined Package</label
+                                        >
+                                        <input
+                                            type="text"
+                                            class="form-control"
+                                            id="parcel_predefined_package"
+                                            name="parcel_predefined_package"
+                                            aria-describedby="predefinedPackageHelp"
+                                        />
+                                        <div
+                                            id="predefinedPackageHelp"
+                                            class="form-text"
+                                        >
+                                            Optional - Available predefined
+                                            packages can be found
+                                            <a
+                                                href="https://www.easypost.com/docs/api#predefined-packages"
+                                                target="_blank"
+                                                rel="noopener noreferrer"
+                                                >here</a
+                                            >.
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="accordion-item mb-3 rounded">
+                        <h2 class="accordion-header" id="headingFour">
+                            <button
+                                class="accordion-button collapsed rounded"
+                                type="button"
+                                data-bs-toggle="collapse"
+                                data-bs-target="#collapseFour"
+                                aria-expanded="false"
+                                aria-controls="collapseFour"
+                            >
+                                <h5 class="card-header">
+                                    Step 4 - Options
+                                </h5>
+                            </button>
+                        </h2>
+                        <div
+                            id="collapseFour"
+                            class="accordion-collapse collapse"
+                            aria-labelledby="headingFour"
+                            data-bs-parent="#accordionExample"
+                        >
+                            <div class="accordion-body">
+                                <div class="card-body row g-3">
+                                    <div class="col-md-6">
+                                        <label
+                                            for="delivery_confirmation"
+                                            class="form-label"
+                                            >Delivery Confirmation</label
+                                        >
+                                        <select name="delivery_confirmation" id="delivery_confirmation" class="form-control">
+                                          <option value="">None</option>
+                                          <option value="adult_signature">ADULT_SIGNATURE</option>
+                                          <option value="no_signature">NO_SIGNATURE (Leave at the door)</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label
+                                            for="print_custom_1"
+                                            class="form-label"
+                                            >Custom Message</label
+                                        >
+                                        <input
+                                            type="text"
+                                            class="form-control"
+                                            id="print_custom_1"
+                                            name="print_custom_1"
+                                            aria-describedby="widthHelp"
+                                        />
+                                        <div id="widthHelp" class="form-text">
+                                            This will show on the label.
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <button
+                    type="submit"
+                    class="btn btn-primary mb-3"
+                    data-bs-toggle="modal"
+                    data-bs-target="#spinnerModal"
                 >
-              </div>
+                    Submit
+                </button>
+            </form>
+            <div
+                class="modal fade"
+                id="spinnerModal"
+                tabindex="-1"
+                aria-labelledby="exampleModalLabel"
+                aria-hidden="true"
+                data-bs-backdrop="static"
+            >
+                <div class="modal-dialog modal-dialog-centered">
+                    <div
+                        class="modal-content"
+                        style="background: transparent; border: none"
+                    >
+                        <div
+                            class="d-flex justify-content-center align-items-center"
+                        >
+                            <div class="spinner-border" role="status">
+                                <span class="visually-hidden">Loading...</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
-          </div>
-        </div>
-        <div class="card mb-3">
-          <h5 class="card-header">From Address</h5>
-          <div class="card-body row g-3">
-            <div class="col-md-6">
-              <label for="from_address_name" class="form-label">Name</label>
-              <input
-                type="text"
-                class="form-control"
-                id="from_address_name"
-                name="from_address_name"
-                required
-              />
-            </div>
-            <div class="col-md-6">
-              <label for="from_address_company" class="form-label"
-                >Company</label
-              >
-              <input
-                type="text"
-                class="form-control"
-                id="from_address_company"
-                name="from_address_company"
-              />
-            </div>
-            <div class="col-12">
-              <label for="from_address_street1" class="form-label"
-                >Street 1</label
-              >
-              <input
-                type="text"
-                class="form-control"
-                id="from_address_street1"
-                placeholder="1234 Main St"
-                name="from_address_street1"
-                required
-              />
-            </div>
-            <div class="col-12">
-              <label for="from_address_street2" class="form-label"
-                >Street 2</label
-              >
-              <input
-                type="text"
-                class="form-control"
-                id="from_address_street2"
-                placeholder="Apartment, studio, or floor"
-                name="from_address_street2"
-              />
-            </div>
-            <div class="col-md-6">
-              <label for="from_address_city" class="form-label">City</label>
-              <input
-                type="text"
-                class="form-control"
-                id="from_address_city"
-                name="from_address_city"
-                required
-              />
-            </div>
-            <div class="col-md-4">
-              <label for="from_address_state" class="form-label">State</label>
-              <input
-                type="text"
-                class="form-control"
-                id="from_address_state"
-                placeholder="2 letter code (EX. AZ, UT, CA, etc.)"
-                name="from_address_state"
-                required
-              />
-            </div>
-            <div class="col-md-2">
-              <label for="from_address_zip" class="form-label">Zip</label>
-              <input
-                type="text"
-                class="form-control"
-                id="from_address_zip"
-                name="from_address_zip"
-                required
-              />
-            </div>
-            <div class="col-md-4">
-              <label for="from_address_country" class="form-label"
-                >Country</label
-              >
-              <input
-                type="text"
-                class="form-control"
-                id="from_address_country"
-                placeholder="2 letter code (EX. US)"
-                name="from_address_country"
-                required
-              />
-            </div>
-            <div class="col-md-4">
-              <label for="from_address_phone" class="form-label">Phone</label>
-              <input
-                type="text"
-                class="form-control"
-                id="from_address_phone"
-                name="from_address_phone"
-                required
-              />
-            </div>
-            <div class="col-md-4">
-              <label for="from_address_email" class="form-label">Email</label>
-              <input
-                type="email"
-                class="form-control"
-                id="from_address_email"
-                name="from_address_email"
-                required
-              />
-            </div>
-          </div>
-        </div>
-        <div class="card mb-3">
-          <h5 class="card-header">Parcel</h5>
-          <div class="card-body row g-3">
-            <div class="col-md-3">
-              <label for="parcel_length" class="form-label">Length</label>
-              <input
-                type="number"
-                class="form-control"
-                id="parcel_length"
-                name="parcel_length"
-                required
-                aria-describedby="lengthHelp"
-              />
-              <div id="lengthHelp" class="form-text">inches</div>
-            </div>
-            <div class="col-md-3">
-              <label for="parcel_width" class="form-label">Width</label>
-              <input
-                type="number"
-                class="form-control"
-                id="parcel_width"
-                name="parcel_width"
-                required
-                aria-describedby="widthHelp"
-              />
-              <div id="widthHelp" class="form-text">inches</div>
-            </div>
-            <div class="col-md-3">
-              <label for="parcel_height" class="form-label">Height</label>
-              <input
-                type="number"
-                class="form-control"
-                id="parcel_height"
-                name="parcel_height"
-                required
-                aria-describedby="heightHelp"
-              />
-              <div id="heightHelp" class="form-text">inches</div>
-            </div>
-            <div class="col-md-3">
-              <label for="parcel_weight" class="form-label">Weight</label>
-              <input
-                type="number"
-                class="form-control"
-                id="parcel_weight"
-                name="parcel_weight"
-                required
-                aria-describedby="weightHelp"
-              />
-              <div id="weightHelp" class="form-text">ounces</div>
-            </div>
-            <div class="col-12">
-              <label for="parcel_predefined_package" class="form-label"
-                >Predefined Package</label
-              >
-              <input
-                type="text"
-                class="form-control"
-                id="parcel_predefined_package"
-                name="parcel_predefined_package"
-                aria-describedby="predefinedPackageHelp"
-              />
-              <div id="predefinedPackageHelp" class="form-text">
-                Optional - Available predefined packages can be found
-                <a
-                  href="https://www.easypost.com/docs/api#predefined-packages"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  >here</a
-                >.
-              </div>
-            </div>
-          </div>
         </div>
 
-        <button
-          type="submit"
-          class="btn btn-primary mb-3"
-          data-bs-toggle="modal"
-          data-bs-target="#spinnerModal"
-        >
-          Submit
-        </button>
-      </form>
-      <div
-        class="modal fade"
-        id="spinnerModal"
-        tabindex="-1"
-        aria-labelledby="exampleModalLabel"
-        aria-hidden="true"
-        data-bs-backdrop="static"
-      >
-        <div class="modal-dialog modal-dialog-centered">
-          <div
-            class="modal-content"
-            style="background: transparent; border: none"
-          >
-            <div class="d-flex justify-content-center align-items-center">
-              <div class="spinner-border" role="status">
-                <span class="visually-hidden">Loading...</span>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <script
-      src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.2.0/js/bootstrap.min.js"
-      integrity="sha512-8Y8eGK92dzouwpROIppwr+0kPauu0qqtnzZZNEF8Pat5tuRNJxJXCkbQfJ0HlUG3y1HB3z18CSKmUo7i2zcPpg=="
-      crossorigin="anonymous"
-      referrerpolicy="no-referrer"
-    ></script>
-  </body>
+        <script
+            src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.2.0/js/bootstrap.min.js"
+            integrity="sha512-8Y8eGK92dzouwpROIppwr+0kPauu0qqtnzZZNEF8Pat5tuRNJxJXCkbQfJ0HlUG3y1HB3z18CSKmUo7i2zcPpg=="
+            crossorigin="anonymous"
+            referrerpolicy="no-referrer"
+        ></script>
+    </body>
 </html>
